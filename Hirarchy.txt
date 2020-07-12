@@ -1,0 +1,144 @@
+
+
+
+File 1:
+
+AugRVision_Camera {Project.getCameraVideo.js}
+
+function 1: getVideo {getVideofromcamera}
+			
+			function 1.1 onResize {onResize}
+
+
+
+File 2:
+AugRVision_Marker_Wrapper.js{Project.markerwrapper.js}
+
+reference AR , POS
+
+function 1:Augrvisionmarker {Jsarucomarker}
+	function1.1 detectMarkers
+	function1.2 markerToObject3D
+	function1.3 drawDebug
+
+
+	
+
+	File 3:
+		AugRvision {aruco.js}
+
+		Referencing : CV.js
+
+		function 1:
+		AugRVision.Marker {AR.Marker}
+			function2 : 
+			AugRVision.Detector {AR.Detector}
+				functoin3:
+				AugRVision.Detector.prototype.detect {AR.Detector.prototype.detect}
+					function4:
+					AugRVision.Detector.prototype.findCandidates {AR.Detector.prototype.findCandidates}
+						function5:
+						AugRVision.Detector.prototype.clockwiseCorners {AR.Detector.prototype.clockwiseCorners}
+							function6:
+							AugRVision.Detector.prototype.notTooNear {AR.Detector.prototype.notTooNear}
+								function7:
+								AugRVision.Detector.prototype.getMarker {AR.Detector.prototype.getMarker}
+									function8:
+									AugRVision.Detector.prototype.hammingDistance {AR.Detector.prototype.hammingDistance}
+										function9:
+										AugRVision.Detector.prototype.mat2id {AR.Detector.prototype.mat2id}
+											function10:
+											AugRVision.Detector.prototype.rotate {AR.Detector.prototype.rotate}
+												function11:
+												AugRVision.Detector.prototype.rotate2 {AR.Detector.prototype.rotate2}
+
+
+	File 4: 
+		AugRVision {CV.js}
+
+		Referencing : NONE!
+
+		function1:
+		AugRVision_CV {CV.Image}
+			function2:
+			AugRVision_CV.grayscale {CV.grayscale}
+			 function3:
+			 AugRVision_CV.threshold {CV.threshold}
+			 	function4:
+			 	AugRVision_CV.adaptiveThreshold {CV.adaptiveThreshold}
+			 		function5:
+			 		AugRVision_CV.otsu {CV.otsu}
+			 			function6:
+			 			AugRVision_CV.BlurStack {CV.BlurStack}
+			 				function7:
+			 				AugRVision_CV.stackBoxBlur {CV.stackBoxBlur}
+			 					function8:
+			 					AugRVision_CV.gaussianBlur {CV.gaussianBlur}
+			 						function9:
+			 						AugRVision_CV.gaussianBlurFilter {CV.gaussianBlurFilter}
+			 							function10:
+			 							AugRVision_CV.gaussianKernel {CV.gaussianKernel}
+			 								function11:
+			 								AugRVision_CV.findContours {CV.findContours}
+			 									function12:
+			 									AugRVision_CV.borderFollowing {CV.borderFollowing}
+			 										function13;
+			 										AugRVision_CV.neighborhoodDeltas {CV.neighborhoodDeltas}
+			 											function14:
+			 											AugRVision_CV.approxPolyDP {CV.approxPolyDP}
+			 												function15;
+			 												AugRVision_CV.warp {CV.warp}
+			 													function16:
+			 													AugRVision_CV.getPerspectiveTransform {CV.getPerspectiveTransform}
+			 														function17:
+			 														AugRVision_CV.square2quad {CV.square2quad}
+			 															function18:
+			 															AugRVision_CV.isContourConvex {CV.isContourConvex}
+			 																function19:
+			 																AugRVision_CV.perimeter {CV.perimeter}
+			 																	function20:
+			 																	AugRVision_CV.minEdgeLength {CV.minEdgeLength}
+			 																		function21:
+			 																		AugRVision_CV.countNonZero {CV.countNonZero}
+			 																			function22:
+			 																			AugRVision_CV.binaryBorder {CV.binaryBorder}
+
+
+	File 5:
+		AugRVision_SingleVectorDecomposition.js {SVD.js}
+
+		Referencing :None!
+
+		function1:
+		AugRVision_SVD.svdcmp {SVD.cmp}
+			function2:
+			AugRVision_SVD.pythag {SVD.pythag}
+				function3:
+				AugRVision_SVD.sign {SVD.sign}
+
+
+	File 6:
+		 AugRVision_PoseEstimation.js
+
+		 Referncing: SVD
+
+		 function1:
+		 AugRVision_POS.posit {POS.posit}
+		 	function2:
+		 	AugRVision_POS.Posit.prototype.buildModel {POS.Posit.prototype.buildModel}
+		 		function3:
+		 		AugRVision_POS.Posit.prototype.init {POS.Posit.prototype.init}
+		 			function4:
+		 			AugRVision_POS.Posit.prototype.pose {POS.Posit.prototype.pose}
+		 				function5:
+		 				AugRVision_POS.Posit.prototype.pos {POS.Posit.prototype.pos}
+		 					function6:
+		 					AugRVision_POS.Posit.prototype.isValid {POS.Posit.prototype.isValid}
+		 						function7:
+		 						AugRVision_POS.Posit.prototype.iterate {POS.Posit.prototype.iterate}
+		 							function8:
+		 							AugRVision_POS.Posit.prototype.error {POS.Posit.prototype.error}
+		 								function9:
+		 								AugRVision_POS.pseudoInverse {POS.pseudoInverse}
+		 									function10:
+		 									AugRVision_POS.Pose {POS.Pose}

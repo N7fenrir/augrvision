@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<script src='vendor/three.js/build/three.js'></script>
+<script src='vendor/three.js/src/extras/animation/MorphAnimation2.js'></script>
+<script src='vendor/three.js/src/extras/animation/CCDIKSolver.js'></script>
+<script src="vendor/three.js/examples/js/loaders/MMDLoader.js"></script>
+
+
+<script src='JavaScripts/AugRVision.js'></script>
+<script src='JavaScripts/AugRVision_CV.js'></script>
+<script src='JavaScripts/AugRVision_PoseEstimation.js'></script>
+<script src='JavaScripts/AugRVision_SingleVectorDecomposition.js'></script>
+
+
+<script src='Appdata/ModelViewer/ModelInfo.js'></script>
+<script src='Appdata/ModelViewer/ModelLoader.js'></script>
+
+
+<script src='JavaScripts/AugRVision_Camera.js'></script>
+<script src='JavaScripts/AugRVision_Marker_Wrapper.js'></script>
+
+<body style='margin: 0px; overflow: hidden; text-align:center;'>
+    
+
+      <script>
+           var renderer	= new THREE.WebGLRenderer({
+		antialias	: true,
+		alpha		: true,
+	});
+        	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+
+	var onRenderFcts = [];
+
+
+	var scene = new THREE.Scene()
+	var camera	= new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.01, 1000);
+	camera.position.z = 0;
+
+          
+        
+          
+          var markerObject3D = new THREE.Object3D
+          scene.add(markerObject3D)
+          
+
+	;(function(){
+		var object3d	= new THREE.AmbientLight(0x101010)
+		object3d.name	= 'Ambient light'
+		scene.add(object3d)
+		var object3d	= new THREE.DirectionalLight('white', 0.1*1.6)
+		object3d.position.set(2.6,1,3).setLength(1)
+		object3d.name	= 'Back light'
+		scene.add(object3d)
+
+		var object3d	= new THREE.DirectionalLight('white', 0.375*1.6)
+		object3d.position.set(-2, -1, 0)
+		object3d.name 	= 'Key light'
+		scene.add(object3d)
+		var object3d	= new THREE.DirectionalLight('white', 0.8*1)
+		object3d.position.set(3, 3, 2)
+		object3d.name	= 'Fill light'
+		scene.add(object3d)
+	})()
+    
+          
+	window.addEventListener('resize', function(){
+		renderer.setSize( window.innerWidth, window.innerHeight )
+		camera.aspect	= window.innerWidth / window.innerHeight
+		camera.updateProjectionMatrix()
+	}, false)
+
+
+	scene.visible	= false
+
+
+	onRenderFcts.push(function(){
+		renderer.render( scene, camera );
+	})
+
+
+	var previousTime = performance.now()
+	requestAnimationFrame(function animate(now){
+
+		requestAnimationFrame( animate );
+
+		onRenderFcts.forEach(function(onRenderFct){
+			onRenderFct(now, now - previousTime)
+		})
+
+		previousTime	= now
+	})
+
+
+	var augrvisionMarker	= new AugRVision_Marker_Wrapper.Augrvisionmarker()
+
+	 if( true ){
+		var videoGrabbing = new AugRVision_Camera.getVideo()
+		augrvisionMarker.videoScaleDown = 2
+	}else console.assert(false)
+
+        document.body.appendChild(videoGrabbing.domElement)
+
+
+	var previousMarkerId = null;
+
+	onRenderFcts.push(function(){
+		var domElement	= videoGrabbing.domElement
+		var markers	= augrvisionMarker.detectMarkers(domElement)
+		var object3d	= scene
+        
+		object3d.visible = false
+
+        var markerfound = new Boolean(false);
+        
+        
+        
+		markers.forEach(function(marker){
+                    
+            console.log(marker.id);
+            var ModelInfo =null;
+  
+            ModelInfos.forEach(function(markeritem)
+                              {
+                if(markeritem.markerId == marker.id)
+                    ModelInfo = markeritem;
+                    var AugRVision_ModelLoader = new AugRVision_3DModel.ModelLoader(ModelInfo);
+            })
+
+
+			augrvisionMarker.markerToObject3D(marker, object3d)
+
+			object3d.visible = true;
+		})
+        
+        
+        
+        
+	});
+        
+    </script>
+    
+
+    
+</body>

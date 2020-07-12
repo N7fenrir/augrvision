@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<script src='vendor/three.js/build/three.js'></script>
+
+
+<script src='JavaScripts/AugRVision.js'></script>
+<script src='JavaScripts/AugRVision_CV.js'></script>
+<script src='JavaScripts/AugRVision_PoseEstimation.js'></script>
+<script src='JavaScripts/AugRVision_SingleVectorDecomposition.js'></script>
+
+<script src='JavaScripts/AugRVision_Camera.js'></script>
+<script src='JavaScripts/AugRVision_Marker_Wrapper.js'></script>
+
+
+<script src='AppData/ContactSharing/ui.BadgeSprite.js'></script>
+
+<script src='AppData/ContactSharing/BadgeInfos.js'></script>
+
+<body style='margin: 0px; overflow: hidden; text-align:center;'>
+    
+
+      <script>
+      var renderer	= new THREE.WebGLRenderer({
+		antialias	: true,
+		alpha		: true,
+	});
+        	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+
+	var onRenderFcts =[];
+          
+          
+          var Render;
+
+
+	var scene = new THREE.Scene()
+	var camera	= new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.01, 1000);
+	camera.position.z = 2;
+
+	var badgeSprite = new UI.BadgeSprite();
+	scene.add(badgeSprite)
+
+
+	window.addEventListener('resize', function(){
+		renderer.setSize( window.innerWidth, window.innerHeight )
+		camera.aspect	= window.innerWidth / window.innerHeight
+		camera.updateProjectionMatrix()
+	}, false)
+
+
+	scene.visible	= false
+
+	
+	var augrvisionMarker	= new AugRVision_Marker_Wrapper.Augrvisionmarker()
+
+	
+	 if( true ){
+		var videoGrabbing = new AugRVision_Camera.getVideo()
+		augrvisionMarker.videoScaleDown = 2
+	}else console.assert(false)
+
+        document.body.appendChild(videoGrabbing.domElement)
+
+
+	var previousMarkerId = null;    
+          
+	onRenderFcts.push(function(){
+		var domElement	= videoGrabbing.domElement
+		var markers	= augrvisionMarker.detectMarkers(domElement)
+		var object3d	= scene
+
+		object3d.visible = false
+
+		markers.forEach(function(marker){
+			var badgeInfo = null
+			badgeInfos.forEach(function(item){
+                
+				if( item.markerId !== marker.id )	return
+				badgeInfo = item
+			})
+
+			if( badgeInfo === null ){
+				console.log('found marker', marker.id, 'but no matching badge found')
+				return
+			}
+
+			if( marker.id !== previousMarkerId ){
+			    	badgeSprite.draw(badgeInfo);
+				previousMarkerId = marker.id;
+                	onRenderFcts.push(function(){
+		renderer.render( scene, camera );
+	})
+			}
+
+
+			augrvisionMarker.markerToObject3D(marker, object3d)
+
+			object3d.visible = true;
+		})
+	});
+        
+
+        
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+       
+    
+</body>
